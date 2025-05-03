@@ -6,11 +6,11 @@
     {% for event in events %}
       <div class="col-md-4">
         <div class="card h-100">
-          {% if event.image_url %}
-            <img src="{{ event.image_url }}"
+            {% if event.image %}
+            <img src="{{ event.image.url }}"
                  class="card-img-top"
                  alt="{{ event.title }}">
-          {% endif %}
+          {% endif %}          
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">{{ event.title }}</h5>
             <p class="card-text text-muted">
