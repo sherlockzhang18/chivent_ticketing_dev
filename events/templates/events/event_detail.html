@@ -21,12 +21,25 @@
       <p><strong>Price:</strong> ${{ event.price }}</p>
       <hr>
       <p>{{ event.description }}</p>
+
       <form action="{% url 'cart:add' event.id %}" method="post" class="mt-4">
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary btn-lg">
-          Add to Cart
-        </button>
+        <div class="d-flex align-items-center gap-2">
+          <input
+            type="number"
+            name="quantity"
+            class="form-control"
+            style="width: 80px;"
+            value="1"
+            min="1"
+            aria-label="Quantity"
+          >
+          <button class="btn btn-primary" type="submit">
+            Add to Cart
+          </button>
+        </div>
       </form>
+
     </div>
   </div>
 {% endblock %}

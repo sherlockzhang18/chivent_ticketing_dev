@@ -3,7 +3,14 @@ from events.models import Event
 from .cart import add_to_cart, remove_from_cart, get_cart
 
 def add_to_cart_view(request, pk):
-    add_to_cart(request.session, pk)
+    if request.method == "POST":
+        try:
+            qty = int(request.POST.get("quantity", 1))
+            if qty < 1:
+                qty = 1
+        except ValueError:
+            qty = 1
+        add_to_cart(request.session, pk, qty)
     return redirect("cart:detail")
 
 def remove_from_cart_view(request, pk):
