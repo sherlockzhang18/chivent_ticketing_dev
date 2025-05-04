@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Pay for Order #{{ order.id }}{% endblock %}
+{% block content %}
+  <div class="text-center py-5">
+    <h1>Order #{{ order.id }}</h1>
+    <p>Total due: <strong>${{ total }}</strong></p>
+    <form action="{% url 'orders:payment' order.id %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-success btn-lg">Pay</button>
+    </form>
+  </div>
+{% endblock %}

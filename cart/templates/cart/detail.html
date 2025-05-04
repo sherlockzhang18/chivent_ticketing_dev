@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block title %}Your Cart{% endblock %}
 {% block content %}
   <h1 class="mb-4">Your Cart ({{ cart_count }})</h1>
@@ -22,10 +21,20 @@
         </li>
       {% endfor %}
     </ul>
-    <div class="d-flex justify-content-between align-items-center">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
       <h4>Total:</h4>
       <h4>${{ total }}</h4>
     </div>
+
+    <!-- Checkout form -->
+    <form action="{% url 'orders:checkout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success btn-lg">
+          Proceed to Checkout
+        </button>
+    </form>
+
   {% else %}
     <p>Your cart is empty.</p>
     <a href="{% url 'events:catalog' %}" class="btn btn-outline-primary mt-3">
