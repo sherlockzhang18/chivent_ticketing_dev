@@ -4,6 +4,9 @@ from events.models import Event
 from .cart import add_to_cart, remove_from_cart, get_cart
 
 
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def add_to_cart_view(request, pk):
     if request.method == "POST":
         event = get_object_or_404(Event, pk=pk)
@@ -39,7 +42,7 @@ def add_to_cart_view(request, pk):
     # Send them back to the event detail page
     return redirect("events:detail", pk=pk)
 
-
+@login_required
 def remove_from_cart_view(request, pk):
     cart = get_cart(request.session)
     qty = cart.get(str(pk), 0)
@@ -51,7 +54,7 @@ def remove_from_cart_view(request, pk):
     remove_from_cart(request.session, pk)
     return redirect("cart:detail")
 
-
+@login_required
 def cart_detail(request):
     cart = get_cart(request.session)
     items, total = [], 0

@@ -32,14 +32,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'events.apps.EventsConfig',
+    'cart.apps.CartConfig',
+    'accounts.apps.AccountsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'events.apps.EventsConfig',
-    'cart.apps.CartConfig',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +74,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'chivent_project.wsgi.application'
 
+
+AUTH_USER_MODEL = "accounts.User"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
