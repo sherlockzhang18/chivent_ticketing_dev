@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Your Cart{% endblock %}
+{% block content %}
+  <h1 class="mb-4">Your Cart ({{ cart_count }})</h1>
+
+  {% if items %}
+    <ul class="list-group mb-3">
+      {% for item in items %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ item.event.title }}</strong><br>
+            <small class="text-muted">{{ item.quantity }} × ${{ item.event.price }}</small>
+          </div>
+          <div class="text-end">
+            <span class="me-3">${{ item.subtotal }}</span>
+            <a href="{% url 'cart:remove' item.event.id %}"
+               class="btn btn-sm btn-outline-danger">
+              Remove
+            </a>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+    <div class="d-flex justify-content-between align-items-center">
+      <h4>Total:</h4>
+      <h4>${{ total }}</h4>
+    </div>
+  {% else %}
+    <p>Your cart is empty.</p>
+    <a href="{% url 'events:catalog' %}" class="btn btn-outline-primary mt-3">
+      Browse Events
+    </a>
+  {% endif %}
+{% endblock %}

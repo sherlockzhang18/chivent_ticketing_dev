@@ -1,26 +1,32 @@
-{% extends 'events/base.html' %}
+{% extends 'base.html' %}
 
+{% block title %}{{ event.title }}{% endblock %}
 {% block content %}
   <div class="row">
-    <div class="col-md-6">
-        {% if event.image %}
+    <div class="col-md-6 mb-3">
+      {% if event.image %}
         <img src="{{ event.image.url }}"
-             class="img-fluid mb-3"
+             class="img-fluid rounded"
              alt="{{ event.title }}">
-      {% endif %}      
+      {% endif %}
     </div>
     <div class="col-md-6">
-      <h1>{{ event.title }}</h1>
+      <h1 class="mb-3">{{ event.title }}</h1>
       <p class="text-muted">
         {{ event.start_datetime|date:"M j, Y H:i" }}
-        – {{ event.end_datetime|date:"M j, Y H:i" }}
+        &ndash;
+        {{ event.end_datetime|date:"M j, Y H:i" }}
       </p>
       <p><strong>Location:</strong> {{ event.location }}</p>
       <p><strong>Price:</strong> ${{ event.price }}</p>
       <hr>
       <p>{{ event.description }}</p>
-
-      <!-- “Add to Cart” form removed until cart is re-enabled -->
+      <form action="{% url 'cart:add' event.id %}" method="post" class="mt-4">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary btn-lg">
+          Add to Cart
+        </button>
+      </form>
     </div>
   </div>
 {% endblock %}
