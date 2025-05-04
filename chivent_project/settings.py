@@ -21,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6%%qsdvdnhaq6gr)uobd5r!-6yo!$3d$^0*=_-^4#%amhcq-@q'
+SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = ["*"]
 
@@ -92,14 +92,11 @@ AUTH_USER_MODEL = "accounts.User"
 # Parse the DATABASE_URL environment variable (falls back to your local MySQL, if you want)
 if os.getenv("DB_HOST"):
     DATABASES = {
-        "default": {
-            "ENGINE":   "django.db.backends.mysql",
-            "NAME":     os.getenv("DB_NAME"),
-            "USER":     os.getenv("DB_USER"),
-            "PASSWORD": os.getenv("DB_PASS"),
-            "HOST":     os.getenv("DB_HOST"),
-            "PORT":     os.getenv("DB_PORT", "3306"),
-        }
+        "default": dj_database_url.config(
+            default=os.environ.get("DATABASE_URL"),
+            conn_max_age=600,
+            ssl_require=True,
+        )
     }
 else:
     # Local development fallback
