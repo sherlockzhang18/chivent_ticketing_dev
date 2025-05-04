@@ -84,30 +84,3 @@ Chivent is a Django-based e-commerce event ticketing web application, inspired b
 
     * **Frontend**: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
     * **Admin**: [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
-
-## Testing
-
-* Add events via the admin and verify your catalog pages
-* Register a new user, log in, add tickets to cart, and complete checkout
-* Verify orders in the admin under **Orders**
-
-## .gitignore
-
-Make sure to include a `.gitignore` in your project root. Common entries:
-
-```
-venv/
-__pycache__/
-*.pyc
-db.sqlite3
-media/
-.env
-/staticfiles/
-*.log
-```
-
-You should **not** track `__pycache__` or `.pyc` files in your repository.
-
----
-
-© 2025 Chivent Inc.
