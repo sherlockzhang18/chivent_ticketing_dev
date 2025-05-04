@@ -1,0 +1,56 @@
+# .gitignore for Django Chivent Project
+
+# Python virtual environment
+
+venv/
+
+# Byte-compiled / optimized / DLL files
+
+**pycache**/
+\*.py\[cod]
+\*\$py.class
+
+# Distribution / packaging
+
+\*.egg-info/
+\*.eggs/
+dist/
+build/
+
+# Django files
+
+\*.log
+\*.pot
+\*.pyc
+db.sqlite3
+media/
+staticfiles/
+
+# Environment variables
+
+.env
+
+# IDE / editor settings
+
+.vscode/
+.idea/
+\*.sublime-project
+\*.sublime-workspace
+
+# Coverage
+
+htmlcov/
+.coverage
+.coverage.\*
+
+# macOS
+
+.DS\_Store
+
+# Node modules (if any frontend tools)
+
+node\_modules/
+
+# Override local settings
+
+local\_settings.py
