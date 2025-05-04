@@ -35,3 +35,7 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity}× {self.event.title}"
+    
+    @property
+    def line_total(self):
+        return self.quantity * self.event.price

@@ -59,3 +59,19 @@ def payment_view(request, order_id):
         return render(request, "orders/payment_success.html", {"order": order})
 
     return render(request, "orders/payment.html", {"order": order, "total": total})
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def my_orders(request):
+    orders = request.user.orders.all().order_by("-created_at")
+    return render(request, "orders/order_list.html", {"orders": orders})
+
+@login_required
+def my_order_detail(request, order_id):
+    order = get_object_or_404(Order, pk=order_id, user=request.user)
+    total = sum(item.line_total for item in order.items.all())
+    return render(request, "orders/order_detail.html", {
+        "order": order,
+        "total": total,
+    })

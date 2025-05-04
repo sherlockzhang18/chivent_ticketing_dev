@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Order #{{ order.id }}{% endblock %}
+{% block content %}
+  <h1>Order #{{ order.id }}</h1>
+  <p>Status: {{ order.get_status_display }}</p>
+  <p>Placed: {{ order.created_at|date:"M j, Y H:i" }}</p>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Event</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in order.items.all %}
+        <tr>
+          <td>
+            <a href="{% url 'events:detail' item.event.id %}">
+              {{ item.event.title }}
+            </a>
+          </td>
+          <td>{{ item.quantity }}</td>
+          <td>${{ item.event.price }}</td>
+          <td>${{ item.line_total }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="3" class="text-end">Total:</th>
+        <th>${{ total }}</th>
+      </tr>
+    </tfoot>
+  </table>
+
+  <a href="{% url 'events:catalog' %}" class="btn btn-primary">
+    Back to Events
+  </a>
+{% endblock %}
