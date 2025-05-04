@@ -4,3 +4,4 @@ gunicorn>=20.1.0
 whitenoise>=6.0.0
 Pillow>=8.0.0
 dj-database-url>=1.0
+cryptography>=3.4

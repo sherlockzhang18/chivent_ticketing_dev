@@ -1,0 +1,39 @@
+version: "2.4"
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: chivent_dev
+      MYSQL_USER: chivent
+      MYSQL_PASSWORD: 123
+      MYSQL_ROOT_PASSWORD: rootpass
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      retries: 5
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  web:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      sh -c "python manage.py migrate --noinput &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: db
+      DB_NAME: chivent_dev
+      DB_USER: chivent
+      DB_PASS: 123
+      DEBUG: 'True'
+volumes:
+  db_data:

@@ -89,17 +89,17 @@ AUTH_USER_MODEL = "accounts.User"
 #     }
 # }
 
-import dj_database_url
 # Parse the DATABASE_URL environment variable (falls back to your local MySQL, if you want)
-DATABASE_URL = os.environ.get("DATABASE_URL")
-if DATABASE_URL:
-    # This will parse mysql://user:pass@host:port/dbname
+if os.getenv("DB_HOST"):
     DATABASES = {
-        "default": dj_database_url.parse(
-            DATABASE_URL,
-            engine="django.db.backends.mysql",
-            conn_max_age=600,
-        )
+        "default": {
+            "ENGINE":   "django.db.backends.mysql",
+            "NAME":     os.getenv("DB_NAME"),
+            "USER":     os.getenv("DB_USER"),
+            "PASSWORD": os.getenv("DB_PASS"),
+            "HOST":     os.getenv("DB_HOST"),
+            "PORT":     os.getenv("DB_PORT", "3306"),
+        }
     }
 else:
     # Local development fallback
