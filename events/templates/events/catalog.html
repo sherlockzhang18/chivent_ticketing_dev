@@ -18,6 +18,9 @@
               {{ event.start_datetime|date:"M j, Y" }}
               at {{ event.start_datetime|time:"H:i" }}
             </p>
+            <p class="text-muted mb-2">
+              Remaining tickets: {{ event.available_tickets }}
+            </p>
             <p class="card-text text-secondary mb-4">{{ event.location }}</p>
             <a href="{% url 'events:detail' event.pk %}"
                class="btn btn-outline-primary mt-auto">
@@ -26,10 +29,16 @@
           </div>
           <div class="card-footer d-flex justify-content-between align-items-center">
             <strong>${{ event.price }}</strong>
-            <a href="{% url 'events:detail' event.pk %}"
-                class="btn btn-sm btn-primary">
+            {% if event.available_tickets > 0 %}
+              <a href="{% url 'events:detail' event.pk %}"
+                 class="btn btn-sm btn-primary">
                 Add to Cart
-            </a>
+              </a>
+            {% else %}
+              <button class="btn btn-sm btn-secondary" disabled>
+                Sold Out
+              </button>
+            {% endif %}
           </div>
         </div>
       </div>

@@ -13,6 +13,7 @@ class Event(models.Model):
     location       = models.CharField(max_length=200)
     start_datetime = models.DateTimeField()
     end_datetime   = models.DateTimeField()
+    available_tickets = models.PositiveBigIntegerField(default=0)
 
     class Meta:
         ordering = ['start_datetime']
