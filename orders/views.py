@@ -1,11 +1,10 @@
-# orders/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 
-from .models import Order, OrderItem
 from cart.cart import get_cart, clear_cart
+from .models import Order, OrderItem
 from events.models import Event
 
 @login_required
@@ -18,7 +17,7 @@ def checkout_view(request):
         messages.info(request, "Your cart is empty.")
         return redirect("events:catalog")
 
-    # Inventory check (same as before) …
+    # 1) Inventory check
     insufficient = []
     for event_id, qty in cart.items():
         event = get_object_or_404(Event, pk=event_id)
@@ -26,11 +25,13 @@ def checkout_view(request):
             insufficient.append((event, event.available_tickets))
     if insufficient:
         for event, avail in insufficient:
-            messages.error(request,
-                f"Not enough tickets for “{event.title}”: only {avail} left.")
+            messages.error(
+                request,
+                f"Not enough tickets for “{event.title}”: only {avail} left."
+            )
         return redirect("cart:detail")
 
-    # Create Order & Items, deduct inventory
+    # 2) Create Order & OrderItems, decrement inventory
     order = Order.objects.create(user=request.user, status="pending")
     for event_id, qty in cart.items():
         event = get_object_or_404(Event, pk=event_id)
@@ -38,16 +39,16 @@ def checkout_view(request):
         event.available_tickets -= qty
         event.save()
 
+    # 3) Clear session cart
     clear_cart(request.session)
 
-    # Redirect to our fake payment page
-    return redirect("orders:payment", order_id=order.id)
+    # 4) Show checkout confirmation
+    return render(request, "orders/checkout_success.html", {"order": order})
 
 
 @login_required
 def payment_view(request, order_id):
     order = get_object_or_404(Order, pk=order_id, user=request.user)
-    # Compute total
     total = sum(item.quantity * item.event.price for item in order.items.all())
 
     if request.method == "POST":
