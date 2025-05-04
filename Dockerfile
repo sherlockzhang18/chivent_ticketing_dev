@@ -1,25 +1,33 @@
-# Use the official slim Python image
+# Dockerfile
 FROM python:3.10-slim
 
-# Ensure stdout/stderr is unbuffered (so logs appear immediately)
+# Don’t buffer stdout/stderr
 ENV PYTHONUNBUFFERED=1
 
-# Set working directory
+# Provide a build‐time default secret key so collectstatic (and any import of settings)
+# doesn’t blow up. This will be overridden at runtime by your Render env var.
+ARG DJANGO_SECRET_KEY="temporary-build-secret"
+ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+
+# Also set sensible defaults for these at build time
+ENV DEBUG=False \
+    ALLOWED_HOSTS="*"
+
 WORKDIR /app
 
-# Copy only requirements, install dependencies (cached if requirements.txt doesn’t change)
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --upgrade pip \
  && pip install -r requirements.txt
 
-# Copy the rest of the application code
+# Copy all your code
 COPY . .
 
-# Collect static files into /app/staticfiles
+# Collect static files
 RUN python manage.py collectstatic --noinput
 
-# Expose port 8000 (mapped to $PORT by your host/platform)
+# Expose port (on Render, $PORT will be set automatically)
 EXPOSE 8000
 
-# Run migrations then launch Gunicorn binding to 0.0.0.0:$PORT (default 8000)
-CMD ["sh", "-c", "python manage.py migrate && gunicorn chivent_project.wsgi:application --bind 0.0.0.0:${PORT:-8000}"]
+# On start: run migrations then launch Gunicorn
+CMD ["sh","-c","python manage.py migrate --noinput && gunicorn chivent_project.wsgi:application --bind 0.0.0.0:${PORT:-8000}"]
