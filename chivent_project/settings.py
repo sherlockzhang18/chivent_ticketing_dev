@@ -89,16 +89,30 @@ AUTH_USER_MODEL = "accounts.User"
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE':   'django.db.backends.mysql',
-        'NAME':     'chivent_dev',
-        'USER':     'chivent',
-        'PASSWORD': '123',
-        'HOST':     '127.0.0.1',
-        'PORT':     '3306',
+import dj_database_url
+# Parse the DATABASE_URL environment variable (falls back to your local MySQL, if you want)
+DATABASE_URL = os.environ.get("DATABASE_URL")
+if DATABASE_URL:
+    # This will parse mysql://user:pass@host:port/dbname
+    DATABASES = {
+        "default": dj_database_url.parse(
+            DATABASE_URL,
+            engine="django.db.backends.mysql",
+            conn_max_age=600,
+        )
     }
-}
+else:
+    # Local development fallback
+    DATABASES = {
+        "default": {
+            "ENGINE":   "django.db.backends.mysql",
+            "NAME":     "chivent_dev",
+            "USER":     "chivent",
+            "PASSWORD": "123",
+            "HOST":     "127.0.0.1",
+            "PORT":     "3306",
+        }
+    }
 
 
 
