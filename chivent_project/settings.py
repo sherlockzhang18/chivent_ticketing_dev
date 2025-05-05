@@ -26,7 +26,10 @@ SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split()
+# read a comma-separated list from the env var, or fall back to our Render hostname
+raw_hosts = os.getenv("ALLOWED_HOSTS", "chivent-ticketing-dev.onrender.com")
+# split into a list, e.g. "a.com,b.com" → ["a.com","b.com"]
+ALLOWED_HOSTS = [h.strip() for h in raw_hosts.split(",") if h.strip()]
 
 
 # Application definition
