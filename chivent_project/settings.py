@@ -31,6 +31,12 @@ raw_hosts = os.getenv("ALLOWED_HOSTS", "chivent-ticketing-dev.onrender.com")
 # split into a list, e.g. "a.com,b.com" → ["a.com","b.com"]
 ALLOWED_HOSTS = [h.strip() for h in raw_hosts.split(",") if h.strip()]
 
+# SECRET_KEY = 'django-insecure-6%%qsdvdnhaq6gr)uobd5r!-6yo!$3d$^0*=_-^4#%amhcq-@q'
+
+# DEBUG = True
+
+# ALLOWED_HOSTS = ['*']
+
 
 # Application definition
 
@@ -85,34 +91,7 @@ AUTH_USER_MODEL = "accounts.User"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
-# Parse the DATABASE_URL environment variable (falls back to your local MySQL, if you want)
-# if os.getenv("DB_HOST"):
-#     DATABASES = {
-#         "default": dj_database_url.config(
-#             default=os.environ.get("DATABASE_URL"),
-#             conn_max_age=600,
-#             ssl_require=True,
-#         )
-#     }
-# else:
-#     # Local development fallback
-#     DATABASES = {
-#         "default": {
-#             "ENGINE":   "django.db.backends.mysql",
-#             "NAME":     "chivent_dev",
-#             "USER":     "chivent",
-#             "PASSWORD": "123",
-#             "HOST":     "127.0.0.1",
-#             "PORT":     "3306",
-#         }
-#     }
 import dj_database_url
 DATABASES = {
   "default": dj_database_url.config(
@@ -121,6 +100,17 @@ DATABASES = {
     ssl_require=True
   )
 }
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE":   "django.db.backends.mysql",
+#         "NAME":     "chivent_dev",
+#         "USER":     "chivent",
+#         "PASSWORD": "123",
+#         "HOST":     "127.0.0.1",
+#         "PORT":     "3306",
+#     }
+# }
 
 
 

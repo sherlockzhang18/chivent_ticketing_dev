@@ -1,6 +1,6 @@
 # Chivent
 
-Chivent is a Django-based e-commerce event ticketing web application, inspired by platforms like Ticketmaster and SeetGeek, serving events in the Chicagoland area. It features user registration, a session-based shopping cart, multistep checkout with a mock payment flow, and a robust admin interface.
+Chivent-ticcketing_system is a Django-based e-commerce event ticketing web application prototype. It features user registration, a session-based shopping cart, multistep checkout with a mock payment flow, and a robust admin interface.
 
 ## Features
 
@@ -84,3 +84,10 @@ Chivent is a Django-based e-commerce event ticketing web application, inspired b
 
     * **Frontend**: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
     * **Admin**: [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
+
+
+## Remote Demo
+
+To gain access to my own remote demo that is deployed on render.com, please visit
+
+[https://chivent-ticketing-dev.onrender.com](https://chivent-ticketing-dev.onrender.com)
