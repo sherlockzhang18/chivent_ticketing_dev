@@ -3,17 +3,14 @@
 from django.contrib import admin
 from django.urls import path, include
 
-
-# chivent_project/urls.py
-from django.contrib import admin
-from django.urls import path, include
-
 urlpatterns = [
+    # Built-in admin site at /admin/
     path('admin/',    admin.site.urls),
     path("orders/",   include("orders.urls")),
-    path('',          include('events.urls',  namespace='events')),
     path('cart/',     include('cart.urls',    namespace='cart')),
     path("accounts/", include("accounts.urls")),
+    # The root URL
+    path('',          include('events.urls',  namespace='events')),
 ]
 
 

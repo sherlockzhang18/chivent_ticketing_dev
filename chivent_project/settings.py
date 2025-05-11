@@ -20,22 +20,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
+# # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+# # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-# read a comma-separated list from the env var, or fall back to our Render hostname
-raw_hosts = os.getenv("ALLOWED_HOSTS", "chivent-ticketing-dev.onrender.com")
-# split into a list, e.g. "a.com,b.com" → ["a.com","b.com"]
-ALLOWED_HOSTS = [h.strip() for h in raw_hosts.split(",") if h.strip()]
+# # read a comma-separated list from the env var, or fall back to our Render hostname
+# raw_hosts = os.getenv("ALLOWED_HOSTS", "chivent-ticketing-dev.onrender.com")
+# # split into a list, e.g. "a.com,b.com" → ["a.com","b.com"]
+# ALLOWED_HOSTS = [h.strip() for h in raw_hosts.split(",") if h.strip()]
 
-# SECRET_KEY = 'django-insecure-6%%qsdvdnhaq6gr)uobd5r!-6yo!$3d$^0*=_-^4#%amhcq-@q'
+SECRET_KEY = 'django-insecure-6%%qsdvdnhaq6gr)uobd5r!-6yo!$3d$^0*=_-^4#%amhcq-@q'
 
-# DEBUG = True
+DEBUG = True
 
-# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -85,32 +85,32 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'chivent_project.wsgi.application'
 
-
+# override the default user model
 AUTH_USER_MODEL = "accounts.User"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
-import dj_database_url
-DATABASES = {
-  "default": dj_database_url.config(
-    default=os.environ.get("DATABASE_URL"),
-    conn_max_age=600,
-    ssl_require=True
-  )
-}
-
+# import dj_database_url
 # DATABASES = {
-#     "default": {
-#         "ENGINE":   "django.db.backends.mysql",
-#         "NAME":     "chivent_dev",
-#         "USER":     "chivent",
-#         "PASSWORD": "123",
-#         "HOST":     "127.0.0.1",
-#         "PORT":     "3306",
-#     }
+#   "default": dj_database_url.config(
+#     default=os.environ.get("DATABASE_URL"),
+#     conn_max_age=600,
+#     ssl_require=True
+#   )
 # }
+
+DATABASES = {
+    "default": {
+        "ENGINE":   "django.db.backends.mysql",
+        "NAME":     "chivent_dev",
+        "USER":     "chivent",
+        "PASSWORD": "123",
+        "HOST":     "127.0.0.1",
+        "PORT":     "3306",
+    }
+}
 
 
 

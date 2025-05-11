@@ -31,7 +31,7 @@ def add_to_cart_view(request, pk):
 
 @login_required
 def remove_from_cart_view(request, pk):
-    # simply remove from session—no inventory return
+    # simply remove from session inventory return
     remove_from_cart(request.session, pk)
     return redirect("cart:detail")
 

@@ -5,7 +5,7 @@ class CatalogView(ListView):
     model = Event
     template_name = 'events/catalog.html'
     context_object_name = 'events'
-    paginate_by = 12  # optional: split into pages
+    paginate_by = 12  # option: split into pages
 
     def get_queryset(self):
         # only future events

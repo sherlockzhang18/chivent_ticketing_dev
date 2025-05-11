@@ -29,5 +29,5 @@ def login_view(request):
 @login_required
 def logout_view(request):
     logout(request)
-    messages.info(request, "You’ve been logged out.")
+    messages.info(request, "You've been logged out.")
     return redirect("events:catalog")
